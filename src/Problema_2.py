@@ -1,43 +1,42 @@
+"""
+Problema 2:
+Dado um arquivo csv com delimitador ';' e com o seguinte cabeçalho: id;nome;telefone;idade. 
+Retorne uma lista com os registro ordenados por nome.
+Exemplo de arquivo:
+Id;nome;telefone;idade
+1;João;43383832;28
+2;Maria;43839322;32
+.
+.
+.
+N;Zzzz;99999999;12
+"""
 
+import csv
 
-aux = 2
-erro = 0
-# ref_arquivo = open("qbdata.txt","r")
-arquivo = open("input_1em_1.txt","r")
-maximo = 32762
-for i in range(2, maximo,1):
+with open('src/dados.csv') as csv_file:
 
-    aux = 2
-    print("Entrada: ", i)
-    linhas = arquivo.readline()
-    print("Entrada arquivo: ", linhas)
+    csv_reader = csv.DictReader(csv_file,delimiter=';',  fieldnames=["Id", "nome", "telefone", "idade"])
+    csv_reader = list(csv_reader)
 
-    for j in range(1, maximo*2):
+    # Verificação do CSV lido    
+    print("-"*(30))
+    print("CSV lido: \n\n", csv_reader)
+    print("-"*(30))
 
-        resto = i%aux
+    csv_reader.pop(0)
 
-        if resto == 0:
-            linhas = arquivo.readline()
+    listaOrdenadaId = sorted(csv_reader, key = lambda x: x['Id'])
+    listaOrdenadaNome = sorted(csv_reader, key = lambda x: x['nome'])
+    listaOrdenadaTelefone = sorted(csv_reader, key = lambda x: x['telefone'])
+    listaOrdenadaIdade = sorted(csv_reader, key = lambda x: x['idade'])
 
-            print(aux)
-
-            print("Aux: ", aux)
-            print("Aux arquivo: ", linhas)
-
-            if not str(aux) in str(linhas):
-                erro = erro + 1
-                print("erro: ", aux)
-                print("Linha: ", linhas)
-                print("Num erro: ", erro)
-
-            i = i/aux
-        else:
-            aux = aux + 1
-
-        if i == 1:
-            break
-    if not i == 1: 
-        print(int(i))
-        linhas = arquivo.readline()
-
-print("ERROS: ", erro)
+    # Verificação das ordenações
+    print("Lista ordenada pelo ID: \n\n", listaOrdenadaId)
+    print("-"*(30))
+    print("Lista ordenada pelo Nome: \n\n", listaOrdenadaNome)
+    print("-"*(30))
+    print("Lista ordenada pelo Telefone: \n\n", listaOrdenadaTelefone)
+    print("-"*(30))
+    print("Lista ordenada pelo Idade: \n\n", listaOrdenadaIdade)
+    print("-"*(30))
